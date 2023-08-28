@@ -38,7 +38,7 @@ const createTripPointTemplate = () => (
   </div>`
 );
 
-export default class TripPointView {
+export default class WaypointView {
   getTemplate() {
     return createTripPointTemplate();
   }

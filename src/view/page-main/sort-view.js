@@ -32,7 +32,7 @@ const createTripSortTemplate = () => (
   </form>`
 );
 
-export default class TripSortView {
+export default class SortView {
   getTemplate() {
     return createTripSortTemplate();
   }

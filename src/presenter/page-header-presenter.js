@@ -1,11 +1,11 @@
 import { render, RenderPosition } from '../render.js';
 
-import TripInfoView from '../view/page-header/info-view.js';
-import TripFiltersView from '../view/page-header/filters-view.js';
+import InfoView from '../view/page-header/info-view.js';
+import FiltersView from '../view/page-header/filters-view.js';
 
 export default class PageHeaderPresenter {
-  tripInfo = new TripInfoView();
-  tripFilters = new TripFiltersView();
+  tripInfo = new InfoView();
+  tripFilters = new FiltersView();
   init = (container) => {
     this.container = container;
 

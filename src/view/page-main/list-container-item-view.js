@@ -2,7 +2,7 @@ import { createElement } from '../../render.js';
 
 const createTripListContainerItemTemplate = () => '<li class="trip-events__item"></li>';
 
-export default class TripListContainerItemView {
+export default class ListContainerItemView {
   getTemplate() {
     return createTripListContainerItemTemplate();
   }

@@ -179,7 +179,7 @@ const createTripFormEditTemplate = () => (
   </form>`
 );
 
-export default class TripFormEditView {
+export default class FormEditView {
   getTemplate() {
     return createTripFormEditTemplate();
   }
