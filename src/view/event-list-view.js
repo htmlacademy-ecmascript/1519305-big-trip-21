@@ -1,10 +1,14 @@
-import { createElement } from '../../render.js';
+import {createElement} from '../render.js';
 
-const createLoadingViewTemplate = () => '<p class="trip-events__msg">Loading...</p>';
+function createListTemplate() {
+  return (
+    '<ul class="trip-events__list"></ul>'
+  );
+}
 
-export default class LoadingView {
+export default class EventListView {
   getTemplate() {
-    return createLoadingViewTemplate();
+    return createListTemplate();
   }
 
   getElement() {
