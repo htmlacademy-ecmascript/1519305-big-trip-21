@@ -1,4 +1,4 @@
-import {mockOffers} from './offers.js';
+import {mockOffers} from './offers';
 import {mockDestinations} from './destination.js';
 import {getRandomArrayElement, getRandomNumber} from '../util.js';
 import {TYPES} from '../const.js';
