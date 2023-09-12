@@ -1,24 +1,9 @@
-const POINTS_COUNT = 6;
-
-const DESCRIPTION = [
-  'Cras aliquet varius magna, non porta ligula feugiat eget.',
-  'Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.',
-  'Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.',
-  'Aliquam erat volutpat.',
-  'In rutrum ac purus sit amet tempus.'
-];
-
-const FilterType = {
-  EVERYTHING: 'everything',
-  FUTURE: 'future',
-  PRESENT: 'present',
-  PAST: 'past',
-};
-
 const SortType = {
-  DEFAULT: 'default',
+  DAY: 'day',
+  EVENT: 'event',
   TIME: 'time',
   PRICE: 'price',
+  OFFERS: 'offers'
 };
 
 const UserAction = {
@@ -31,9 +16,15 @@ const UpdateType = {
   PATCH: 'PATCH',
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
-  INIT: 'INIT',
+  INIT: 'INIT'
 };
 
+const EditType = {
+  EDITING: 'EDITING',
+  CREATING: 'CREATING'
+};
 
-export {POINTS_COUNT, DESCRIPTION, FilterType, SortType,
-  UserAction, UpdateType};
+const DESTINATION_ITEMS_LENGTH = 2;
+
+
+export {SortType, UserAction, UpdateType, EditType, DESTINATION_ITEMS_LENGTH};
