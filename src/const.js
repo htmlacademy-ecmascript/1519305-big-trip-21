@@ -1,23 +1,30 @@
-const POINTS_COUNT = 6;
+const SortType = {
+  DAY: 'day',
+  EVENT: 'event',
+  TIME: 'time',
+  PRICE: 'price',
+  OFFERS: 'offers'
+};
 
-const TYPES = [
-  'Taxi',
-  'Bus',
-  'Train',
-  'Ship',
-  'Drive',
-  'Flight',
-  'Check-in',
-  'Sightseeing',
-  'Restaurant'
-];
+const UserAction = {
+  UPDATE_POINT: 'UPDATE_POINT',
+  ADD_POINT: 'ADD_POINT',
+  DELETE_POINT: 'DELETE_POINT',
+};
 
-const DESCRIPTION = [
-  'Cras aliquet varius magna, non porta ligula feugiat eget.',
-  'Aliquam id orci ut lectus varius viverra. Nullam nunc ex, convallis sed finibus eget, sollicitudin eget ante.',
-  'Sed blandit, eros vel aliquam faucibus, purus ex euismod diam, eu luctus nunc ante ut dui.',
-  'Aliquam erat volutpat.',
-  'In rutrum ac purus sit amet tempus.'
-];
+const UpdateType = {
+  PATCH: 'PATCH',
+  MINOR: 'MINOR',
+  MAJOR: 'MAJOR',
+  INIT: 'INIT'
+};
 
-export {POINTS_COUNT, TYPES, DESCRIPTION};
+const EditType = {
+  EDITING: 'EDITING',
+  CREATING: 'CREATING'
+};
+
+const DESTINATION_ITEMS_LENGTH = 2;
+
+
+export {SortType, UserAction, UpdateType, EditType, DESTINATION_ITEMS_LENGTH};
