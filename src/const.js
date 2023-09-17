@@ -1,9 +1,14 @@
+const Mode = {
+  DEFAULT: 'DEFAULT',
+  EDITING: 'EDITING',
+};
+
 const SortType = {
   DAY: 'day',
-  EVENT: 'event',
+  EVENT: 'eventSort',
   TIME: 'time',
   PRICE: 'price',
-  OFFERS: 'offers'
+  OFFERS: 'offers',
 };
 
 const UserAction = {
@@ -16,15 +21,15 @@ const UpdateType = {
   PATCH: 'PATCH',
   MINOR: 'MINOR',
   MAJOR: 'MAJOR',
-  INIT: 'INIT'
+  INIT: 'INIT',
+  ERROR: 'ERROR',
 };
 
-const EditType = {
-  EDITING: 'EDITING',
-  CREATING: 'CREATING'
+const FilterType = {
+  EVERYTHING: 'everything',
+  FUTURE: 'future',
+  PRESENT: 'present',
+  PAST: 'past',
 };
 
-const DESTINATION_ITEMS_LENGTH = 2;
-
-
-export {SortType, UserAction, UpdateType, EditType, DESTINATION_ITEMS_LENGTH};
+export { Mode, SortType, UserAction, UpdateType, FilterType };
