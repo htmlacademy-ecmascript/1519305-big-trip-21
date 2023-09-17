@@ -1,77 +1,79 @@
+import { UpdateType, UserAction } from '../const.js';
+import { RenderPosition } from '../framework/render.js';
 import EditPointView from '../view/edit-point-view.js';
-import {render, remove, RenderPosition} from '../framework/render.js';
-import {UserAction, UpdateType, EditType} from '../const.js';
-
+import { render, remove } from '../framework/render.js';
 
 export default class NewPointPresenter {
-
-  #container = null;
-  #destinationModel = null;
-  #offersModel = null;
-  #pointsModel = null;
-  #filterModel = null;
-  #pointNewComponent = null;
-  #handleFormSubmit = null;
-  #handleDeleteClick = null;
-  #handleDestroy = null;
-  #handleEscKeyDown = null;
+  #pointListContainer = null;
   #handleDataChange = null;
-  #handleDestroyPresenter = null;
+  #handleDestroy = null;
 
-  constructor({container, destinationsModel, offersModel, pointsModel, filterModel, onDataChange, onDestroy}) {
-    this.#container = container;
-    this.#destinationModel = destinationsModel;
-    this.#offersModel = offersModel;
-    this.#pointsModel = pointsModel;
-    this.#filterModel = filterModel;
+  #pointEditComponent = null;
+
+  constructor({ pointListContainer, onDataChange, onDestroy }) {
+    this.#pointListContainer = pointListContainer;
     this.#handleDataChange = onDataChange;
-    this.#handleDestroyPresenter = onDestroy;
-
-    this._eventEditComponent = null;
+    this.#handleDestroy = onDestroy;
   }
 
-  init() {
-    if (this.#pointNewComponent !== null) {
+  init = (offers, destinations) => {
+    if (this.#pointEditComponent !== null) {
       return;
     }
 
-    this.#pointNewComponent = new EditPointView({
-      pointDestinations: this.#destinationModel.get(),
-      offers: this.#offersModel.get(),
-      onFormSubmit: this.#formSubmitHandler,
-      onCloseClick: this.#handleClickClose,
-      typeButton: EditType.CREATING,
-      getOffersByType: (type) => this.#offersModel.getByType(type),
-      getDestinationById: (destination) => this.#destinationModel.getById(destination),
-      getDestinationByCity: (city) => this.#destinationModel.getByCity(city)
+    this.#pointEditComponent = new EditPointView({
+      onFormSubmit: this.#handleFormSubmit,
+      onDeleteClick: this.#handleDeleteClick,
+      offers: offers,
+      destinations: destinations,
     });
 
-    render(this.#pointNewComponent, this.#container, RenderPosition.AFTERBEGIN);
+    render(
+      this.#pointEditComponent,
+      this.#pointListContainer,
+      RenderPosition.AFTERBEGIN
+    );
 
     document.addEventListener('keydown', this.#escKeyDownHandler);
-  }
-
-  destroy () {
-    if (this.#pointNewComponent === null) {
-      return;
-    }
-    this.#handleDestroyPresenter();
-    document.querySelector('.trip-main__event-add-btn').disabled = false;
-    remove(this.#pointNewComponent);
-    this.#pointNewComponent = null;
-
-    document.removeEventListener('keydown', this.#escKeyDownHandler);
-  }
-
-  #formSubmitHandler = (point) => {
-    this.#handleDataChange(
-      UserAction.CREATE_POINT,
-      UpdateType.MINOR,
-      {...point},
-    );
   };
 
-  #handleClickClose = () => {
+  destroy = () => {
+    if (this.#pointEditComponent === null) {
+      return;
+    }
+
+    this.#handleDestroy();
+
+    remove(this.#pointEditComponent);
+    this.#pointEditComponent = null;
+
+    document.removeEventListener('keydown', this.#escKeyDownHandler);
+  };
+
+  setSaving = () => {
+    this.#pointEditComponent.updateElement({
+      isDisabled: true,
+      isSaving: true,
+    });
+  };
+
+  setAborting = () => {
+    const resetFormState = () => {
+      this.#pointEditComponent.updateElement({
+        isDisabled: false,
+        isSaving: false,
+        isDeleting: false,
+      });
+    };
+
+    this.#pointEditComponent.shake(resetFormState);
+  };
+
+  #handleFormSubmit = (point) => {
+    this.#handleDataChange(UserAction.ADD_POINT, UpdateType.MINOR, point);
+  };
+
+  #handleDeleteClick = () => {
     this.destroy();
   };
 
@@ -81,22 +83,4 @@ export default class NewPointPresenter {
       this.destroy();
     }
   };
-
-  setSaving() {
-    this.#pointNewComponent.updateElement({
-      isDisabled: true,
-      isSaving: true
-    });
-  }
-
-  setAborting() {
-    const resetFormState = () => {
-      this.#pointNewComponent.updateElement({
-        isDisabled: false,
-        isSaving: false,
-        isDeleting: false
-      });
-    };
-    this.#pointNewComponent.shake(resetFormState);
-  }
 }

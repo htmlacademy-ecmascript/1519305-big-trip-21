@@ -1,50 +1,50 @@
 import dayjs from 'dayjs';
-import duration from 'dayjs/plugin/duration.js';
+import { getTimeDiff } from './time.js';
 
-dayjs.extend(duration);
+const getById = (searchedId, list) =>
+  list.find((currentElement) => currentElement.id === searchedId);
 
-const MSEC_IN_SEC = 1000;
-const SEC_IN_MIN = 60;
-const MIN_IN_HOUR = 60;
-const HOUR_IN_DAY = 24;
-
-const MSEC_IN_HOUR = MIN_IN_HOUR * SEC_IN_MIN * MSEC_IN_SEC;
-const MSEC_IN_DAY = HOUR_IN_DAY * MSEC_IN_HOUR;
-
-const getRandomInteger = (min, max) => {
-  const lower = Math.ceil(Math.min(Math.abs(min), Math.abs(max)));
-  const upper = Math.floor(Math.max(Math.abs(min), Math.abs(max)));
-  const result = Math.random() * (upper - lower + 1) + lower;
-
-  return Math.floor(result);
+const getByType = (searchedType, offersList) => {
+  const initializedOffers = offersList.find(
+    (currentOffers) => currentOffers.type === searchedType.eventType
+  );
+  return initializedOffers.offers;
 };
 
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
+const toUpperCaseFirstLetter = (word) =>
+  `${word.slice(0, 1).toUpperCase()}${word.slice(1)}`;
+const getValueFromString = (string) =>
+  string.toLowerCase().replaceAll(' ', '-');
+const sortDay = (firstPoint, secondPoint) => {
+  const firstPointDate = dayjs(firstPoint.dateFrom);
+  const secondPointDate = dayjs(secondPoint.dateFrom);
+  return firstPointDate.valueOf() - secondPointDate.valueOf();
+};
+const sortTime = (pointA, pointB) =>
+  getTimeDiff(pointB.dateFrom, pointB.dateTo, false) -
+  getTimeDiff(pointA.dateFrom, pointA.dateTo, false);
+const sortPrice = (pointA, pointB) => pointB.basePrice - pointA.basePrice;
 
-const formatStringToDateTime = (date) => dayjs(date).format('DD/MM/YY HH:mm'); //YYYY-MM-DDTHH
+const isDatesEqual = (dateA, dateB) =>
+  (dateA === null && dateB === null) || dayjs(dateA).isSame(dateB);
 
-const formatStringToShortDate = (date) => dayjs(date).format('MMM DD');
+const isPointPast = ({ dateFrom, dateTo }) =>
+  dayjs().isAfter(dayjs(dateFrom)) && dayjs().isAfter(dayjs(dateTo));
+const isPointPresent = ({ dateFrom, dateTo }) =>
+  dayjs().isAfter(dayjs(dateFrom)) && dayjs().isBefore(dayjs(dateTo));
+const isPointFuture = ({ dateFrom, dateTo }) =>
+  dayjs().isBefore(dayjs(dateFrom)) && dayjs().isBefore(dayjs(dateTo));
 
-const formatStringToTime = (date) => dayjs(date).format('HH:mm');
-
-function getPointDuration(dateFrom, dateTo) {
-  const timeDiff = dayjs(dateTo).diff(dayjs(dateFrom));
-
-  let pointDuration = 0;
-
-  switch (true) {
-    case (timeDiff >= MSEC_IN_DAY):
-      pointDuration = dayjs.duration(timeDiff).format('DD[D] HH[H] mm[M]');
-      break;
-    case (timeDiff >= MSEC_IN_HOUR):
-      pointDuration = dayjs.duration(timeDiff).format('HH[H] mm[M]');
-      break;
-    case (timeDiff < MSEC_IN_DAY):
-      pointDuration = dayjs.duration(timeDiff).format('mm[M]');
-      break;
-  }
-
-  return pointDuration;
-}
-
-export {getRandomInteger, getRandomArrayElement, formatStringToDateTime, formatStringToShortDate, formatStringToTime, getPointDuration, dayjs};
+export {
+  sortDay,
+  sortTime,
+  sortPrice,
+  getById,
+  getByType,
+  isDatesEqual,
+  isPointPast,
+  isPointPresent,
+  isPointFuture,
+  toUpperCaseFirstLetter,
+  getValueFromString,
+};
