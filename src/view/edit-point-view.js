@@ -324,8 +324,7 @@ export default class EditPointView extends AbstractStatefulView {
       this.element.querySelector('#event-start-time-1'),
       {
         enableTime: true,
-        // eslint-disable-next-line camelcase
-        time_24hr: true,
+        'time_24hr': true,
         dateFormat: 'd/m/y H:i',
         maxDate: this._state.dateTo,
         defaultDate: this._state.dateFrom,
@@ -339,8 +338,7 @@ export default class EditPointView extends AbstractStatefulView {
       this.element.querySelector('#event-end-time-1'),
       {
         enableTime: true,
-        // eslint-disable-next-line camelcase
-        time_24hr: true,
+        'time_24hr': true,
         dateFormat: 'd/m/y H:i',
         minDate: this._state.dateFrom,
         defaultDate: this._state.dateTo,
